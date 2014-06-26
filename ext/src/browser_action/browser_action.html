@@ -7,6 +7,10 @@
 <script type="text/javascript" src="api_bridge.js"></script>
 <script type="text/javascript" src="server_model.js"></script>
 <script type="text/javascript" src="browser_action.js"></script>
+
+<link rel="stylesheet" href="common.css"/>
+<link rel="stylesheet" href="popup_style.css"/>
+
 </head>
 <body>
 <style type="text/css">
@@ -20,9 +24,12 @@
 		font-size: 2em;
 	}
 </style>
+<div id="banner">
+	StandupMagic
+	<a id="close-banner" class="close-x"></a>
+</div>
 
 <div id="mainPopup">
-<h1>Standup</h1>
 
 <h4>Yesterday:</h4>
 <div id="standup-yesterday"></div>
