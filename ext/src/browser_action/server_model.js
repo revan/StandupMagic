@@ -59,11 +59,30 @@ Asana.ServerModel = {
     callback(url);
   },
 
-  tasksWorkspace: function(workspaceId) {
-    var options = Asana.Options.loadOptions();
-    var url = 'https://' + options.asana_host_port + '/tasks/?workspace=' + workspaceId
-      + '&assignee=me';
-    callback(url);
+  /**
+   * Gets user's tasks that have not been completed.
+   */
+  tasksWorkspaceTODO: function(workspaceId, callback) {
+    var url = '/tasks/?workspace=' + workspaceId
+      + '&assignee=me&completed_since=now'
+    Asana.ApiBridge.request("GET", url, {},
+      function(response) {
+        callback(response.data);
+      });
+  },
+
+  /**
+   * Gets user's tasks completed in last 36 hours.
+   */
+  tasksWorkspace: function(workspaceId, callback) {
+    var yesterday = (function(d){ d.setHours(d.getHours()-36); return d})(new Date);
+    console.log(yesterday);
+    var url = '/tasks/?workspace=' + workspaceId
+      + '&assignee=me&completed_since='+yesterday.toISOString();
+    Asana.ApiBridge.request("GET", url, {},
+      function(response) {
+        callback(response.data);
+      });
   },
 
   /**

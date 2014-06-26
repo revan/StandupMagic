@@ -1,4 +1,14 @@
 <!doctype html>
+<head>
+<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.10.custom.min.js"></script>
+<script type="text/javascript" src="asana.js"></script>
+<script type="text/javascript" src="options.js"></script>
+<script type="text/javascript" src="api_bridge.js"></script>
+<script type="text/javascript" src="server_model.js"></script>
+<script type="text/javascript" src="browser_action.js"></script>
+</head>
+<body>
 <style type="text/css">
 	#mainPopup {
 		padding: 10px;
@@ -12,6 +22,13 @@
 </style>
 
 <div id="mainPopup">
-<h1>Hello extensionizr!</h1>
-<p>To shut this popup down, edit the manifest file and remove the "default popup" key. To edit it, just edit ext/browser_action/browser_action.html. The CSS is there, too.</p>
+<h1>Standup</h1>
+
+<h4>Yesterday:</h4>
+<div id="standup-yesterday"></div>
+
+<h4>Today:</h4>
+<div id="standup-today"></div>
 </div>
+
+</body>

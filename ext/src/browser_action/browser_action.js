@@ -1,5 +1,5 @@
 window.addEventListener('load', function() {
-  fetchYesterday();
+  //fetches today, then calls fetchYesterday()
   fetchToday();
 
   // Our default error handler.
@@ -68,43 +68,50 @@ window.addEventListener('load', function() {
   });
 });
 
-var appendEach = function(list){
-  $("#standup-contents").append("<ol>");
+var appendEach = function(list, id){
+  $(id).append("<ol>");
   list.forEach(function(entry) {
-    $("#standup-contents").append('<li>'+entry.name+'</li>');
+    $(id).append('<li>'+entry.name+'</li>');
   })
-  $("#standup-contents").append("</ol>");
+  $(id).append("</ol>");
 }
 
-var fetchToday = function(options) {
+var fetchToday = function() {
   var self = this;
 
   //get workspace
   Asana.ServerModel.workspaces(function(workspace) {
-    console.log(workspace);
-
     Asana.ServerModel.me(function(user) {
       Asana.ServerModel.tasksWorkspaceTODO(workspace[0].id, 
         function(response) {
-          $("#standup-contents").append("<h3>Today:</h3>");
-          appendEach(response);
+          appendEach(response, "#standup-today");
+
+          fetchYesterday(response);
         });
     });
   });
 }
 
-var fetchYesterday = function(options) {
+var fetchYesterday = function(todo) {
   var self = this;
 
   //get workspace
   Asana.ServerModel.workspaces(function(workspace) {
-    console.log(workspace);
-
     Asana.ServerModel.me(function(user) {
       Asana.ServerModel.tasksWorkspace(workspace[0].id,
         function(response) {
-          $("#standup-contents").append("<h3>Yesterday:</h3>");
-          appendEach(response);
+          //remove any intersection with todo
+          console.log(todo);
+          console.log(response);
+          for (var i = response.length-1; i>=0; i--) {
+            for (var k = 0; k < todo.length; k++) {
+              if (response[i].id === todo[k].id) {
+                response.splice(i, 1);
+                break;
+              }
+            }
+          }
+          appendEach(response, "#standup-yesterday");
         });
     });
   });
