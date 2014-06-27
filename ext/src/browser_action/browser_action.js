@@ -26,6 +26,7 @@ var appendEachCL = function(list, id){
 }
 
 var fetchOpenCL = function() {
+  $("#standup-cl").activity();
   chrome.storage.sync.get(["cl_address", "cl_email"], function(response) {
     var clURL = response.cl_address;
     var email = response.cl_email;
@@ -36,6 +37,7 @@ var fetchOpenCL = function() {
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
         appendEachCL(JSON.parse(xhr.responseText).results, "#standup-cl");
+        $("#standup-cl").activity(false);
       }
     }
     xhr.send();
@@ -52,6 +54,8 @@ var appendEach = function(list, id){
 
 var fetchAsanaToday = function() {
   var self = this;
+  $("#standup-today").activity();
+  $("#standup-yesterday").activity();
 
   //get workspace
   Asana.ServerModel.workspaces(function(workspace) {
@@ -59,6 +63,7 @@ var fetchAsanaToday = function() {
       Asana.ServerModel.tasksWorkspaceTODO(workspace[0].id, 
         function(response) {
           appendEach(response, "#standup-today");
+          $("#standup-today").activity(false);
 
           fetchAsanaYesterday(response);
         });
@@ -86,6 +91,7 @@ var fetchAsanaYesterday = function(todo) {
             }
           }
           appendEach(response, "#standup-yesterday");
+          $("#standup-yesterday").activity(false);
         });
     });
   });
