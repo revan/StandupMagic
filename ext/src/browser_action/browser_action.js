@@ -1,6 +1,6 @@
 window.addEventListener('load', function() {
   //fetches today, then calls fetchAsanaYesterday()
-  //fetchAsanaToday();
+  fetchAsanaToday();
   fetchOpenCL();
 
   // Our default error handler.
