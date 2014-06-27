@@ -80,8 +80,6 @@ var fetchAsanaYesterday = function(todo) {
       Asana.ServerModel.tasksWorkspace(workspace[0].id,
         function(response) {
           //remove any intersection with todo
-          console.log(todo);
-          console.log(response);
           for (var i = response.length-1; i>=0; i--) {
             for (var k = 0; k < todo.length; k++) {
               if (response[i].id === todo[k].id) {
