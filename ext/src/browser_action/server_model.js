@@ -72,10 +72,10 @@ Asana.ServerModel = {
   },
 
   /**
-   * Gets user's tasks completed in last 36 hours.
+   * Gets user's tasks completed in last [days_back] days.
    */
-  tasksWorkspace: function(workspaceId, callback) {
-    var yesterday = (function(d){ d.setHours(d.getHours()-36); return d})(new Date);
+  tasksWorkspace: function(workspaceId, callback, days_back) {
+    var yesterday = (function(d){ d.setHours(d.getHours()-(12 + days_back*24)); return d})(new Date);
     console.log(yesterday);
     var url = '/tasks/?workspace=' + workspaceId
       + '&assignee=me&completed_since='+yesterday.toISOString();

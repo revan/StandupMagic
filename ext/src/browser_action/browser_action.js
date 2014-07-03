@@ -3,6 +3,11 @@ window.addEventListener('load', function() {
   fetchAsanaToday();
   fetchOpenCL();
 
+  // Update Asana when days-back changes.
+  $("#days-back").keyup(function() {
+    fetchAsanaToday();
+  });
+
   // Our default error handler.
   Asana.ServerModel.onError = function(response) {
     showError(response.errors[0].message);
@@ -45,6 +50,7 @@ var fetchOpenCL = function() {
 }
 
 var appendEach = function(list, id){
+  $(id).empty();
   $(id).append("<ol>");
   list.forEach(function(entry) {
     $(id).append('<li>'+entry.name+'</li>');
@@ -73,6 +79,7 @@ var fetchAsanaToday = function() {
 
 var fetchAsanaYesterday = function(todo) {
   var self = this;
+  var days_back = $("#days-back").val();
 
   //get workspace
   Asana.ServerModel.workspaces(function(workspace) {
@@ -90,7 +97,7 @@ var fetchAsanaYesterday = function(todo) {
           }
           appendEach(response, "#standup-yesterday");
           $("#standup-yesterday").activity(false);
-        });
+        }, days_back);
     });
   });
 }
