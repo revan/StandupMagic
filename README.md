@@ -8,3 +8,5 @@ Fetches tasks from [Asana](www.asana.com) and outstanding code reviews from a [R
 TODO:
 
 * Google Calendar integration
+* Links everywhere
+* Cleanup dead code and markup
